@@ -42,6 +42,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 	String src = new File("").getAbsolutePath() + "/src/"; // path to image
 	Clip hop;
 	Ship s = new Ship("GoodSpaceship.png");
+	Background b = new Background("Background.gif");
 
 	
 	// clip.open(audioInputStream);
@@ -69,8 +70,9 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 		g.setFont(font2);
 		g.setColor(Color.CYAN);
 
-	
+		b.paint(g);
 		s.paint(g);
+		
 		// g.drawString(life+"", 400, 400);
 
 	}
