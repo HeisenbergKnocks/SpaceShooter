@@ -5,18 +5,19 @@ import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
-/* class to represent a Background object in a game */
-public class Background {
+/* class to represent a Projectile object in a game */
+public class Projectile {
 
+	public boolean active = false;
 	private int x, y; 		
 	private boolean alive; 	
 	private int width, height;
 	private Image img; 		
 	private int vx, vy; 	
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
-
+	
 	//constructor
-	public Background(String fileName) {
+	public Projectile(String fileName) {
 		x = 200;
 		y = 200;
 		vx = 0;
@@ -26,28 +27,28 @@ public class Background {
 		
 		//do not touch
 		img = getImage(fileName);
-		updateBackground();
+		updateProjectile();
 	}
 
-	//2nd constructor allows placement (location) of the object
-	public Background(String fileName, int paramX, int paramY, int paramVy){
+	//2nd constructor - allows placement (location) of the object
+	public Projectile(String fileName, int paramX, int paramY, int paramVx, int paramVy){
 		x = paramX;
 		y = paramY;
-		vx = 0;
+		vx = paramVx;
 		vy = paramVy;
 		
 		//helper functions to handle img drawing
 		img = getImage(fileName);
-		updateBackground();
+		updateProjectile();
 		
 		//helper function for location of image
-		//if you update x and y, call updateBackground
-		updateBackground();
+		//if you update x and y, call updateProjectile
+		updateProjectile();
 		
 	}
 	
 	
-	public void setVx(int vx) { 
+	public void setVx(int vx) { //check that this is good!!!!!!!!!!!!!
 		vy = 0;
 		this.vx = vx;
 	}
@@ -61,9 +62,11 @@ public class Background {
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, tx, null);
+		y += vy;
+		updateProjectile();
 	}
 
-	void updateBackground() {
+	private void updateProjectile() {
 		tx.setToTranslation(x, y);
 	}
 
@@ -71,7 +74,7 @@ public class Background {
 	private Image getImage(String path) {
 		Image tempImage = null;
 		try {
-			URL imageURL = Background.class.getResource(path);
+			URL imageURL = Projectile.class.getResource(path);
 			tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,72 +85,23 @@ public class Background {
 	public int getX() {
 		return x;
 	}
-
+	
+	public int getY() {
+		return y;
+	}
+	
 	public void setX(int x) {
 		this.x = x;
 		
-		updateBackground();
+		updateProjectile();
 	}
 
 	public void setY(int y) {
 		this.y = y;
 		
-		updateBackground();
+		updateProjectile();
 	}
 
-	public boolean isAlive() {
-		return alive;
-	}
-
-	public void setAlive(boolean alive) {
-		this.alive = alive;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public Image getImg() {
-		return img;
-	}
-
-	public void setImg(Image img) {
-		this.img = img;
-	}
-
-	public AffineTransform getTx() {
-		return tx;
-	}
-
-	public void setTx(AffineTransform tx) {
-		this.tx = tx;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public int getVx() {
-		return vx;
-	}
-
-	public int getVy() {
-		return vy;
-	}
-	
-	
 	
 
 }

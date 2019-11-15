@@ -42,8 +42,8 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 	String src = new File("").getAbsolutePath() + "/src/"; // path to image
 	Clip hop;
 	Ship s = new Ship("GoodSpaceship.png");
-	Background b = new Background("Background.gif");
-
+	Background b1 = new Background("Background1.gif", 0, 0, 1);
+	Background b2 = new Background("Background2.gif", 0, 900, 1);
 	
 	// clip.open(audioInputStream);
 	Sequencer sequencer;
@@ -51,6 +51,9 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 	int my_variable = 0; // example
 
 	String lost = "";
+	
+	//example use of new class derived from the Ship class
+	Projectile proj = new Projectile("GoodSpacehsip.png", 0, 0, 0, -5);
 	
 	int x_leave;
 	int y_leave;
@@ -70,7 +73,8 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 		g.setFont(font2);
 		g.setColor(Color.CYAN);
 
-		b.paint(g);
+		b1.paint(g);
+		b2.paint(g);
 		s.paint(g);
 		
 		// g.drawString(life+"", 400, 400);
@@ -82,7 +86,19 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 
 	//
 	public void update() {
-
+		
+		b1.setY(b1.getY() + b1.getVy());
+		if(b1.getY() >= 900){
+			b1.setY(b1.getY() - 1800);
+		}
+		
+		b2.setY(b2.getY() + b2.getVy());
+		if(b2.getY() >= 900){
+			b2.setY(b2.getY() - 1800);
+		}
+		
+		b1.updateBackground();
+		b2.updateBackground();
 	}
 
 	@Override
@@ -169,15 +185,11 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		x_enter = e.getX();
-		y_enter = e.getY();
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		x_leave = e.getX();
-		y_leave = e.getY();
 		
 	}	
 
@@ -189,7 +201,9 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+		//shoot a projectile on mouse press
+		//invoke the shoot() method that we wrote!
+		s.fire();
 	}
 
 	@Override
@@ -208,8 +222,10 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 		// TODO Auto-generated method stub
 		System.out.println(arg0.getX() + ":" + arg0.getY());
 		
-		s.setX(arg0.getX() - 50);
-		s.setY(arg0.getY() - 75);
+		if(Math.abs(arg0.getX() - s.getX()) <= 175 && Math.abs(arg0.getY() - s.getY()) <= 175){
+			s.setX(arg0.getX() - 50);
+			s.setY(arg0.getY() - 75);
+		}
 		
 	}
   

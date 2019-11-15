@@ -15,6 +15,9 @@ public class Ship {
 	private int vx, vy; 	
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
 
+	//array of projectiles for ship
+	Projectile[] projectiles = new Projectile[10];
+		
 	//constructor
 	public Ship(String fileName) {
 		x = 200;
@@ -28,7 +31,25 @@ public class Ship {
 		img = getImage(fileName);
 		updateShip();
 	}
-
+	
+	//shoot method that will active a Projectile in the array
+	public void fire(){
+		
+		for(int i = 0; i < projectiles.length; i++){
+			if(!projectiles[i].active){
+				projectiles[i].active = true; //turn this one
+				
+				//move projectile to location of ship
+				projectiles[i].setX(x);
+				projectiles[i].setY(y);
+				
+				//exit immediately after activating one projectile
+				break; //break will exit the nearest loop
+			}
+		}
+	}
+	
+	
 	//2nd constructor allows placement (location) of the object
 	public Ship(String fileName, int paramX, int paramY){
 		x = paramX;
@@ -39,6 +60,11 @@ public class Ship {
 		//helper functions to handle img drawing
 		img = getImage(fileName);
 		updateShip();
+		
+		//add projectile objects in the array of Projectiles
+		for(int i = 0; i < projectiles.length; i++){
+			projectiles[i] = new Projectile("GoodSpaceship.png", x, y, 0, -5);
+		}
 		
 		//helper function for location of image
 		//if you update x and y, call updateShip
@@ -61,6 +87,15 @@ public class Ship {
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, tx, null);
+		
+		//draw active projectiles for ship
+		for(int i = 0; i < projectiles.length; i++){
+			if(projectiles[i] != null && projectiles[i].active){
+				projectiles[i].paint(g);
+			}
+		}
+		
+		
 	}
 
 	private void updateShip() {
@@ -82,7 +117,11 @@ public class Ship {
 	public int getX() {
 		return x;
 	}
-
+	
+	public int getY() {
+		return y;
+	}
+	
 	public void setX(int x) {
 		this.x = x;
 		
