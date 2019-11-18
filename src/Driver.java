@@ -42,6 +42,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 	String src = new File("").getAbsolutePath() + "/src/"; // path to image
 	Clip hop;
 	Ship s = new Ship("GoodSpaceship.png");
+	EnemyShip es = new EnemyShip("EnemyShip.png");
 	Background b1 = new Background("Background1.gif", 0, 0, 1);
 	Background b2 = new Background("Background2.gif", 0, 900, 1);
 	
@@ -76,6 +77,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 		b1.paint(g);
 		b2.paint(g);
 		s.paint(g);
+		es.paint(g);
 		
 		// g.drawString(life+"", 400, 400);
 
@@ -99,6 +101,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 		
 		b1.updateBackground();
 		b2.updateBackground();
+		
 	}
 
 	@Override
@@ -204,6 +207,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 		//shoot a projectile on mouse press
 		//invoke the shoot() method that we wrote!
 		s.fire();
+		
 	}
 
 	@Override

@@ -48,7 +48,7 @@ public class Projectile {
 	}
 	
 	
-	public void setVx(int vx) { //check that this is good!!!!!!!!!!!!!
+	public void setVx(int vx) { 
 		vy = 0;
 		this.vx = vx;
 	}

@@ -5,8 +5,8 @@ import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
-/* class to represent a Ship object in a game */
-public class Ship {
+/* class to represent a EnemyShip object in a game */
+public class EnemyShip {
 
 	private int x, y; 		
 	private boolean alive; 	
@@ -14,12 +14,13 @@ public class Ship {
 	private Image img; 		
 	private int vx, vy; 	
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
-
-	//array of projectiles for ship
+	private int counter = 0, rate = 50;
+	
+	//array of projectiles for EnemyShip
 	Projectile[] projectiles = new Projectile[10];
 		
 	//constructor
-	public Ship(String fileName) {
+	public EnemyShip(String fileName) {
 		x = 200;
 		y = 200;
 		vx = 0;
@@ -29,12 +30,12 @@ public class Ship {
 		
 		//add projectile objects in the array of Projectiles
 		for(int i = 0; i < projectiles.length; i++){
-			projectiles[i] = new Projectile("GoodSpaceship.png", x, y, 0, -5);
+			projectiles[i] = new Projectile("GoodSpaceship.png", x, y, 0, 5);
 		}
 		
 		//do not touch
 		img = getImage(fileName);
-		updateShip();
+		updateEnemyShip();
 	}
 	
 	//shoot method that will active a Projectile in the array
@@ -44,7 +45,7 @@ public class Ship {
 			if(!projectiles[i].active){
 				projectiles[i].active = true; //turn this one
 				
-				//move projectile to location of ship
+				//move projectile to location of EnemyShip
 				projectiles[i].setX(x);
 				projectiles[i].setY(y);
 				
@@ -56,7 +57,7 @@ public class Ship {
 	
 	
 	//2nd constructor allows placement (location) of the object
-	public Ship(String fileName, int paramX, int paramY){
+	public EnemyShip(String fileName, int paramX, int paramY){
 		x = paramX;
 		y = paramY;
 		vx = 0;
@@ -64,16 +65,16 @@ public class Ship {
 		
 		//helper functions to handle img drawing
 		img = getImage(fileName);
-		updateShip();
+		updateEnemyShip();
 		
 		//add projectile objects in the array of Projectiles
 		for(int i = 0; i < projectiles.length; i++){
-			projectiles[i] = new Projectile("GoodSpaceship.png", x, y, 0, -5);
+			projectiles[i] = new Projectile("GoodSpaceship.png", x, y, 0, 5);
 		}
 		
 		//helper function for location of image
-		//if you update x and y, call updateShip 
-		updateShip();
+		//if you update x and y, call updateEnemyShip 
+		updateEnemyShip();
 		
 	}
 	
@@ -93,7 +94,14 @@ public class Ship {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(img, tx, null);
 		
-		//draw active projectiles for ship
+		//update counter
+		counter++;
+		if(counter % rate == 0){ //fire every time counter is divisible by rate
+			fire();
+			
+		}
+		
+		//draw active projectiles for EnemyShip
 		for(int i = 0; i < projectiles.length; i++){
 			if(projectiles[i] != null && projectiles[i].active){
 				projectiles[i].paint(g);
@@ -103,7 +111,7 @@ public class Ship {
 		
 	}
 
-	private void updateShip() {
+	private void updateEnemyShip() {
 		tx.setToTranslation(x, y);
 	}
 
@@ -111,7 +119,7 @@ public class Ship {
 	private Image getImage(String path) {
 		Image tempImage = null;
 		try {
-			URL imageURL = Ship.class.getResource(path);
+			URL imageURL = EnemyShip.class.getResource(path);
 			tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -130,15 +138,16 @@ public class Ship {
 	public void setX(int x) {
 		this.x = x;
 		
-		updateShip();
+		updateEnemyShip();
 	}
 
 	public void setY(int y) {
 		this.y = y;
 		
-		updateShip();
+		updateEnemyShip();
 	}
 
 	
 
 }
+
