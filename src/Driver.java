@@ -54,7 +54,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 	String lost = "";
 	
 	//example use of new class derived from the Ship class
-	Projectile proj = new Projectile("GoodSpacehsip.png", 0, 0, 0, -5);
+	Projectile proj = new Projectile("Fireball.png", 0, 0, 0, -5);
 	
 	int x_leave;
 	int y_leave;
@@ -207,7 +207,6 @@ public class Driver extends JPanel implements ActionListener, KeyListener,
 		//shoot a projectile on mouse press
 		//invoke the shoot() method that we wrote!
 		s.fire();
-		
 	}
 
 	@Override

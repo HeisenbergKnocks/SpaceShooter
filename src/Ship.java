@@ -29,7 +29,7 @@ public class Ship {
 		
 		//add projectile objects in the array of Projectiles
 		for(int i = 0; i < projectiles.length; i++){
-			projectiles[i] = new Projectile("GoodSpaceship.png", x, y, 0, -5);
+			projectiles[i] = new Projectile("Fireball.png", x, y, 0, -5);
 		}
 		
 		//do not touch
@@ -45,8 +45,8 @@ public class Ship {
 				projectiles[i].active = true; //turn this one
 				
 				//move projectile to location of ship
-				projectiles[i].setX(x);
-				projectiles[i].setY(y);
+				projectiles[i].setX(x+20);
+				projectiles[i].setY(y+20);
 				
 				//exit immediately after activating one projectile
 				break; //break will exit the nearest loop
@@ -68,7 +68,7 @@ public class Ship {
 		
 		//add projectile objects in the array of Projectiles
 		for(int i = 0; i < projectiles.length; i++){
-			projectiles[i] = new Projectile("GoodSpaceship.png", x, y, 0, -5);
+			projectiles[i] = new Projectile("Fireball.png", x, y, 0, -5);
 		}
 		
 		//helper function for location of image
